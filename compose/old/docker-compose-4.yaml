@@ -1,0 +1,40 @@
+version: '3'
+services:
+  giropops-senhas:
+    image: diogofiaminghi/linuxtips-giropops-senhas:7.1
+    ports:
+      - "5000:5000"
+    networks:
+      - giropops
+    environment:
+      REDIS_HOST: redis
+    volumes:
+      - strigus:/strigus
+    depends_on:
+      - redis
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+        limits:
+          cpus: '0.5'
+          memory: 256M
+  redis:
+    image: redis
+#   ports:
+#     - "6379:6379"
+    networks:
+      - giropops
+    volumes:
+      - strigus:/strigus
+
+
+
+networks:
+  giropops:
+    driver: bridge
+
+volumes:
+  strigus:
+
